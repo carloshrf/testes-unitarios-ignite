@@ -41,25 +41,18 @@ describe('', () => {
     const description = 'first deposit'
     const amount = 10
 
-    let statementId
-    let statement
+    const newStatement = await createStatementUseCase.execute({
+      user_id: id,
+      type,
+      amount,
+      description
+    })
 
-    if (id) {
-      const response = await createStatementUseCase.execute({
-        user_id: id,
-        type,
-        amount,
-        description
-      })
-      statementId = response.id
+    const statement = await getStatementOperationUseCase.execute({
+      user_id: id,
+      statement_id: newStatement.id
+    })
 
-      if (statementId) {
-        statement = await getStatementOperationUseCase.execute({
-          user_id: id,
-          statement_id: statementId
-        })
-      }
-    }
 
     expect(statement).toHaveProperty('id')
     expect(statement?.amount).toBe(amount)

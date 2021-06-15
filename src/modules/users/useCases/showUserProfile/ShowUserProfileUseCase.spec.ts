@@ -1,4 +1,3 @@
-import { User } from "../../entities/User";
 import { InMemoryUsersRepository } from "../../repositories/in-memory/InMemoryUsersRepository";
 import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
 import { ShowUserProfileUseCase } from "./ShowUserProfileUseCase";
@@ -21,11 +20,7 @@ describe('Show User Profile', () => {
       password: '123456'
     })
 
-    let userProfile
-
-    if (user.id) {
-      userProfile = await showUserProfileUseCase.execute(user.id);
-    }
+    const userProfile = await showUserProfileUseCase.execute(user.id);
 
     expect(userProfile).toHaveProperty('id')
   })

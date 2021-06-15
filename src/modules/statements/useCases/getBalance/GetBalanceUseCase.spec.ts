@@ -25,11 +25,8 @@ describe('', () => {
       password: '123456'
     })
 
-    let balance
-    if (user.id) {
-      const { id } = user
-      balance = await getBalanceUseCase.execute({ user_id: id })
-    }
+    const { id } = user
+    const balance = await getBalanceUseCase.execute({ user_id: id })
 
     expect(balance).toHaveProperty('balance')
     expect(balance?.balance).toBe(0)

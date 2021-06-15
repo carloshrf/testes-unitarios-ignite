@@ -1,3 +1,13 @@
-import { createConnection } from 'typeorm';
+require('dotenv').config()
+import { createConnection, getConnectionOptions } from 'typeorm';
 
-(async () => await createConnection())();
+export default (async () => {
+  const defaultOptions = await getConnectionOptions();
+
+  return createConnection(
+    Object.assign(defaultOptions, {
+      host: 'localhost',
+      database: process.env.NOD_ENV === 'test' ? 'fin_api_test' : 'fin_api'
+    })
+  )
+})()
