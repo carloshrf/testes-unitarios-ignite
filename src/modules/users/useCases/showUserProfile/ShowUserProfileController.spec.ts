@@ -13,7 +13,7 @@ describe('Show User Profile Controller', () => {
     await connection.runMigrations();
 
     const id = uuidV4()
-    const password = await hash('password', 8)
+    const password = await hash('654321', 8)
 
     await connection.query(`
       INSERT INTO users(id, name, email, password)
@@ -31,7 +31,7 @@ describe('Show User Profile Controller', () => {
 
     const tokenResponse = await request(app).post('/api/v1/sessions').send({
       email,
-      password: 'password'
+      password: '654321'
     })
 
     const { token } = tokenResponse.body;
